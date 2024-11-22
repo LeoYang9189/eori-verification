@@ -3,52 +3,66 @@
 /* 基础样式 */
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #f8fafc;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     color: #1a1a1a;
+    min-height: 100vh;
 }
 
-/* 渐变和阴影 */
-.bg-gradient-custom {
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+/* 布局容器 */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
-.custom-shadow {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+/* 导航栏样式 */
+.nav-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
-/* 商务风格卡片 */
-.business-card {
+/* 卡片样式 */
+.card {
     background: #ffffff;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.business-card:hover {
+.card:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* 输入框样式 */
-.input-focus {
+.input-custom {
     border: 2px solid transparent;
     transition: all 0.3s ease;
+    background: #f8fafc;
 }
 
-.input-focus:focus {
+.input-custom:focus {
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: #ffffff;
 }
 
 /* 按钮样式 */
 .button-primary {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .button-primary:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+}
+
+.button-primary:active {
+    transform: translateY(1px);
 }
 
 /* 动画效果 */
@@ -71,14 +85,17 @@ body {
 
 /* 历史记录样式 */
 .history-item {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
     transition: all 0.3s ease;
-    background-color: #ffffff;
     border-left: 4px solid transparent;
 }
 
 .history-item:hover {
     transform: translateX(4px);
-    border-left-color: #3b82f6;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .history-item.valid {
@@ -93,6 +110,12 @@ body {
 .export-button {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
 }
 
 .export-button:hover {
@@ -104,6 +127,8 @@ body {
 .copy-button {
     opacity: 0;
     transition: all 0.3s ease;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
 }
 
 .field-container:hover .copy-button {
@@ -112,13 +137,41 @@ body {
 
 /* 提示信息样式 */
 .notification {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transform: translateX(100%);
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
+    z-index: 50;
 }
 
 .notification.show {
     transform: translateX(0);
+}
+
+/* 状态标签样式 */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.status-badge.valid {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.invalid {
+    background-color: #fee2e2;
+    color: #991b1b;
 }
 
 /* 响应式设计 */
@@ -135,72 +188,49 @@ body {
     .grid-cols-2 {
         grid-template-columns: 1fr;
     }
-}
 
-/* 装饰元素 */
-.decoration-dot {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: #3b82f6;
-    opacity: 0.2;
-}
-
-.decoration-line {
-    position: absolute;
-    width: 100px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-    opacity: 0.1;
+    .history-item {
+        margin-bottom: 0.75rem;
+    }
 }
 
 /* 暗色模式 */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #1a1a1a;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         color: #ffffff;
     }
     
-    .business-card {
-        background-color: #2d2d2d;
-    }
-    
-    .text-gray-600 {
-        color: #d1d1d1;
-    }
-
-    .history-item {
+    .card {
         background-color: #2d2d2d;
         border-color: #3d3d3d;
     }
-
+    
+    .input-custom {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .input-custom:focus {
+        background: #2d2d2d;
+    }
+    
+    .history-item {
+        background-color: #2d2d2d;
+    }
+    
     .notification {
-        background-color: rgba(45, 45, 45, 0.9);
+        background: rgba(45, 45, 45, 0.95);
+        color: #ffffff;
     }
 
-    .decoration-dot,
-    .decoration-line {
-        opacity: 0.05;
+    .status-badge.valid {
+        background-color: rgba(16, 185, 129, 0.2);
+        color: #34d399;
     }
-}
 
-/* 打印样式 */
-@media print {
-    .no-print {
-        display: none;
-    }
-    
-    .print-only {
-        display: block;
-    }
-    
-    body {
-        background: white;
-    }
-    
-    .business-card {
-        box-shadow: none;
-        border: 1px solid #e5e7eb;
+    .status-badge.invalid {
+        background-color: rgba(239, 68, 68, 0.2);
+        color: #f87171;
     }
 }

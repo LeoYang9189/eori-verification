@@ -6,6 +6,10 @@
     <title>航运百事通 - EORI 验证系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <!-- 添加 Font Awesome 图标 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- 添加 Lottie 动画 -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body class="font-sans antialiased">
     <!-- Header -->
@@ -25,24 +29,66 @@
     <!-- Main Section -->
     <section class="pt-32 pb-20 bg-gradient-to-b from-gray-50 to-white">
         <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <h1 class="text-5xl font-bold mb-6">
-                    航运百事通 EORI 验证系统
-                </h1>
-                <p class="text-xl text-gray-600 mb-8">
-                    使用欧盟官方认证接口，快速准确验证 EORI 号码的有效性
-                </p>
+            <div class="max-w-6xl mx-auto">
+                <!-- 顶部装饰元素 -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+                
+                <!-- 主标题区域 -->
+                <div class="flex flex-col md:flex-row items-center justify-between mb-16">
+                    <div class="md:w-1/2 text-left mb-8 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                            专业的 EORI 验证系统
+                            <span class="text-blue-600 block">助力跨境贸易</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 mb-8">
+                            使用欧盟官方认证接口，快速准确验证 EORI 号码的有效性
+                        </p>
+                        <!-- 特点标签 -->
+                        <div class="flex flex-wrap gap-4 mb-8">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                官方认证
+                            </span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                <i class="fas fa-bolt mr-2"></i>
+                                快速响应
+                            </span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                安全可靠
+                            </span>
+                        </div>
+                    </div>
+                    <!-- 右侧动画 -->
+                    <div class="md:w-1/2">
+                        <lottie-player 
+                            src="https://assets2.lottiefiles.com/packages/lf20_sz4yj0rw.json"
+                            background="transparent"
+                            speed="1"
+                            style="width: 100%; height: 400px;"
+                            loop
+                            autoplay>
+                        </lottie-player>
+                    </div>
+                </div>
+    
+                <!-- 验证区域 -->
                 <div class="max-w-xl mx-auto">
-                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-search text-blue-600 text-xl mr-3"></i>
+                            <h2 class="text-xl font-semibold">EORI 验证</h2>
+                        </div>
                         <input type="text" 
                                id="eoriInput"
                                placeholder="请输入 EORI 号码" 
-                               class="w-full px-4 py-3 rounded-lg border mb-4 focus:outline-none focus:border-blue-500"
+                               class="w-full px-4 py-3 rounded-lg border border-gray-200 mb-4 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                         >
                         <button onclick="validateEORI()" 
                                 id="validateBtn"
-                                class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
-                            验证
+                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            开始验证
                         </button>
                     </div>
                     
