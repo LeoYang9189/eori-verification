@@ -55,6 +55,10 @@ async function validateEORI() {
 
             // 添加复制按钮
             addCopyButtons();
+
+            // 保存到历史记录
+            saveToHistory(data);
+            showSuccess('验证成功');
         } else {
             throw new Error(data.error || '验证失败');
         }
@@ -78,6 +82,90 @@ function getStatusText(status) {
         default:
             return '未知';
     }
+}
+
+// 历史记录管理
+function saveToHistory(data) {
+    const history = JSON.parse(localStorage.getItem('eoriHistory') || '[]');
+    const exists = history.findIndex(item => item.eori === data.eori);
+    
+    if (exists !== -1) {
+        history.splice(exists, 1);
+    }
+    
+    history.unshift(data);
+    
+    if (history.length > 10) {
+        history.pop();
+    }
+    
+    localStorage.setItem('eoriHistory', JSON.stringify(history));
+    updateHistoryDisplay();
+}
+
+function updateHistoryDisplay() {
+    const historyArea = document.getElementById('historyArea');
+    const historyList = document.getElementById('historyList');
+    const history = JSON.parse(localStorage.getItem('eoriHistory') || '[]');
+
+    if (history.length === 0) {
+        historyArea.classList.add('hidden');
+        return;
+    }
+
+    historyArea.classList.remove('hidden');
+    historyList.innerHTML = '';
+
+    history.forEach(record => {
+        const item = document.createElement('div');
+        item.className = 'bg-gray-50 p-4 rounded-lg';
+        item.innerHTML = `
+            <div class="flex justify-between items-center">
+                <div>
+                    <span class="font-semibold">${record.eori}</span>
+                    <span class="${record.status === 1 ? 'text-green-600' : 'text-red-600'} ml-2">
+                        ${getStatusText(record.status)}
+                    </span>
+                </div>
+                <button onclick="revalidate('${record.eori}')" 
+                        class="text-blue-600 hover:text-blue-800">
+                    重新验证
+                </button>
+            </div>
+            <div class="text-sm text-gray-600 mt-1">${record.name || '-'}</div>
+        `;
+        historyList.appendChild(item);
+    });
+}
+
+// 导出功能
+function exportToCSV() {
+    const history = JSON.parse(localStorage.getItem('eoriHistory') || '[]');
+    if (history.length === 0) {
+        alert('没有可导出的记录');
+        return;
+    }
+
+    const csvContent = "data:text/csv;charset=utf-8,"
+        + "EORI,Status,Company,Address,City,Country\n"
+        + history.map(record => {
+            return `${record.eori},${getStatusText(record.status)},${record.name},"${record.address}",${record.city},${record.country}`;
+        }).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "eori_history.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showSuccess('导出成功');
+}
+
+// 重新验证功能
+function revalidate(eori) {
+    document.getElementById('eoriInput').value = eori;
+    validateEORI();
 }
 
 // 添加复制功能
@@ -125,4 +213,9 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && document.activeElement.id === 'eoriInput') {
         validateEORI();
     }
+});
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    updateHistoryDisplay();
 });
