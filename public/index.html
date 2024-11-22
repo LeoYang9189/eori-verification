@@ -3,41 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EORI 验证系统 - 欧盟官方认证接口</title>
+    <title>航运百事通 - EORI 验证系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body class="font-sans antialiased">
     <!-- Header -->
     <header class="fixed w-full bg-white/90 backdrop-blur-md z-50">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <div class="text-2xl font-bold">EORI<span class="text-blue-600">Verify</span></div>
+                <div class="text-2xl font-bold">航运<span class="text-blue-600">百事通</span></div>
                 <div class="hidden md:flex space-x-8">
                     <a href="#features" class="hover:text-blue-600">功能</a>
                     <a href="#how-it-works" class="hover:text-blue-600">使用方法</a>
-                    <a href="#pricing" class="hover:text-blue-600">价格</a>
                     <a href="#faq" class="hover:text-blue-600">常见问题</a>
                 </div>
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700">
-                    立即验证
-                </button>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Main Section -->
     <section class="pt-32 pb-20 bg-gradient-to-b from-gray-50 to-white">
         <div class="container mx-auto px-6">
             <div class="max-w-3xl mx-auto text-center">
                 <h1 class="text-5xl font-bold mb-6">
-                    权威的 EORI 号码验证系统
+                    航运百事通 EORI 验证系统
                 </h1>
                 <p class="text-xl text-gray-600 mb-8">
                     使用欧盟官方认证接口，快速准确验证 EORI 号码的有效性
                 </p>
                 <div class="max-w-xl mx-auto">
+                    <!-- 验证输入区域 -->
                     <div class="bg-white p-6 rounded-xl shadow-lg">
                         <input type="text" 
                                id="eoriInput"
@@ -90,45 +86,70 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 历史记录区域 -->
+                    <div id="historyArea" class="mt-8 hidden">
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-semibold">最近验证记录</h3>
+                                <button onclick="exportToCSV()" 
+                                        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    导出记录
+                                </button>
+                            </div>
+                            <div id="historyList" class="space-y-4">
+                                <!-- 历史记录将在这里动态添加 -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20">
+    <section id="features" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">为什么选择我们</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">主要功能</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
                     <div class="text-blue-600 text-4xl mb-4">
-                        <i class="fas fa-check-circle"></i>
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4">官方认证</h3>
-                    <p class="text-gray-600">直接对接欧盟官方 WSDL 接口，确保数据真实可靠</p>
+                    <h3 class="text-xl font-semibold mb-4">实时验证</h3>
+                    <p class="text-gray-600">直接对接欧盟官方 SOAP 接口，确保数据真实可靠</p>
                 </div>
-                <div class="p-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
                     <div class="text-blue-600 text-4xl mb-4">
-                        <i class="fas fa-bolt"></i>
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4">快速响应</h3>
-                    <p class="text-gray-600">毫秒级响应速度，即时获取验证结果</p>
+                    <h3 class="text-xl font-semibold mb-4">历史记录</h3>
+                    <p class="text-gray-600">保存最近的验证记录，支持导出和重新验证</p>
                 </div>
-                <div class="p-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
                     <div class="text-blue-600 text-4xl mb-4">
-                        <i class="fas fa-shield-alt"></i>
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-4">安全可靠</h3>
-                    <p class="text-gray-600">数据传输加密，保障您的信息安全</p>
+                    <h3 class="text-xl font-semibold mb-4">便捷复制</h3>
+                    <p class="text-gray-600">一键复制验证结果中的任何信息</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How it Works -->
-    <section id="how-it-works" class="py-20 bg-gray-50">
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">使用流程</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">使用方法</h2>
             <div class="max-w-4xl mx-auto">
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center">
@@ -143,56 +164,9 @@
                     </div>
                     <div class="text-center">
                         <div class="text-2xl font-bold text-blue-600 mb-4">3</div>
-                        <h3 class="text-xl font-semibold mb-2">获取结果</h3>
-                        <p class="text-gray-600">实时显示详细的验证结果</p>
+                        <h3 class="text-xl font-semibold mb-2">查看结果</h3>
+                        <p class="text-gray-600">获取详细的验证结果和企业信息</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">价格方案</h2>
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold mb-4">基础版</h3>
-                    <div class="text-3xl font-bold mb-6">¥99<span class="text-lg text-gray-600">/月</span></div>
-                    <ul class="space-y-3 mb-8">
-                        <li>✓ 每日100次查询</li>
-                        <li>✓ 基础客服支持</li>
-                        <li>✓ API访问</li>
-                    </ul>
-                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        选择方案
-                    </button>
-                </div>
-                <div class="bg-blue-600 text-white p-8 rounded-xl shadow-lg transform scale-105">
-                    <h3 class="text-xl font-bold mb-4">专业版</h3>
-                    <div class="text-3xl font-bold mb-6">¥299<span class="text-lg opacity-75">/月</span></div>
-                    <ul class="space-y-3 mb-8">
-                        <li>✓ 每日1000次查询</li>
-                        <li>✓ 优先客服支持</li>
-                        <li>✓ API访问</li>
-                        <li>✓ 数据导出</li>
-                    </ul>
-                    <button class="w-full bg-white text-blue-600 py-2 rounded-lg hover:bg-gray-100">
-                        选择方案
-                    </button>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold mb-4">企业版</h3>
-                    <div class="text-3xl font-bold mb-6">¥999<span class="text-lg text-gray-600">/月</span></div>
-                    <ul class="space-y-3 mb-8">
-                        <li>✓ 无限次查询</li>
-                        <li>✓ 24/7专属支持</li>
-                        <li>✓ 高级API访问</li>
-                        <li>✓ 自定义集成方案</li>
-                    </ul>
-                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        选择方案
-                    </button>
                 </div>
             </div>
         </div>
@@ -213,7 +187,7 @@
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-lg font-semibold mb-2">验证结果包含哪些信息？</h3>
-                    <p class="text-gray-600">验证结果将显示 EORI 号码的有效性、注册国家、企业名称等关键信息。</p>
+                    <p class="text-gray-600">验证结果将显示 EORI 号码的有效性、注册国家、企业名称等关键信息。所有信息均来自欧盟官方数据库。</p>
                 </div>
             </div>
         </div>
@@ -224,14 +198,14 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h4 class="text-xl font-bold mb-4">EORIVerify</h4>
-                    <p class="text-gray-400">欧盟官方认证的 EORI 验证服务提供商</p>
+                    <h4 class="text-xl font-bold mb-4">航运百事通</h4>
+                    <p class="text-gray-400">专业的 EORI 验证服务提供商</p>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">快速链接</h4>
                     <ul class="space-y-2">
                         <li><a href="#features" class="text-gray-400 hover:text-white">功能</a></li>
-                        <li><a href="#pricing" class="text-gray-400 hover:text-white">价格</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white">使用方法</a></li>
                         <li><a href="#faq" class="text-gray-400 hover:text-white">常见问题</a></li>
                     </ul>
                 </div>
@@ -243,21 +217,24 @@
                     <h4 class="text-lg font-semibold mb-4">关注我们</h4>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-twitter"></i>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                            </svg>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-linkedin"></i>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                            </svg>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 LeoYang. All rights reserved.</p>
+                <p>© 2024 航运百事通. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="scripts.js"></script>
 </body>
 </html>
