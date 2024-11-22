@@ -23,12 +23,6 @@ yarn-error.log*
 dist/
 build/
 
-# Test
-coverage/
-
 # Temp files
 *.swp
 *.swo
-
-.env
-.vercel

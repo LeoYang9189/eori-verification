@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "eori-verification",
   "builds": [
     {
       "src": "server.js",

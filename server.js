@@ -11,8 +11,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const SOAP_URL = 'https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation';
+// SOAP URL
+const EORI_SOAP_URL = 'https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation';
 
+// EORI 验证接口
 app.post('/api/validate-eori', async (req, res) => {
     const { eori } = req.body;
 
@@ -23,8 +25,6 @@ app.post('/api/validate-eori', async (req, res) => {
     }
 
     try {
-        console.log(`开始验证 EORI: ${eori}`);
-
         const soapRequest = `<?xml version='1.0' encoding='UTF-8'?>
             <soapenv:Envelope 
                 xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
@@ -37,21 +37,15 @@ app.post('/api/validate-eori', async (req, res) => {
                 </soapenv:Body>
             </soapenv:Envelope>`;
 
-        console.log('发送 SOAP 请求:', soapRequest);
-
         const response = await axios({
             method: 'post',
-            url: SOAP_URL,
+            url: EORI_SOAP_URL,
             headers: {
                 'Content-Type': 'text/xml;charset=UTF-8',
-                'Accept': 'text/xml, text/html, application/xhtml+xml, */*',
-                'SOAPAction': '""'
+                'SOAPAction': ''
             },
-            data: soapRequest,
-            timeout: 10000
+            data: soapRequest
         });
-
-        console.log('SOAP 响应:', response.data);
 
         const parser = new xml2js.Parser({
             explicitArray: false,
@@ -65,35 +59,24 @@ app.post('/api/validate-eori', async (req, res) => {
         res.json({
             eori: validationResult.eori,
             status: validationResult.status === '0' ? 1 : 0,
-            statusDescr: validationResult.status === '0' ? 'Valid' : 'Invalid',
+            statusDescr: validationResult.statusDescr,
             name: validationResult.name || '',
             address: validationResult.address || '',
             street: validationResult.street || '',
             postalCode: validationResult.postalCode || '',
             city: validationResult.city || '',
-            country: validationResult.country || '',
-            requestDate: result['S:Envelope']['S:Body']
-                ['ns0:validateEORIResponse'].return.requestDate
+            country: validationResult.country || ''
         });
 
     } catch (error) {
-        console.error('SOAP 请求错误:', {
-            message: error.message,
-            response: error.response?.data,
-            status: error.response?.status
-        });
-
+        console.error('EORI 验证错误:', error);
         res.status(500).json({
             error: '验证服务暂时不可用，请稍后重试',
-            details: process.env.NODE_ENV === 'development' ? {
-                message: error.message,
-                response: error.response?.data
-            } : undefined
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
 });
 
 app.listen(port, () => {
     console.log(`服务器运行在 http://localhost:${port}`);
-    console.log('SOAP URL:', SOAP_URL);
 });
