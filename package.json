@@ -1,46 +1,11 @@
 {
   "name": "eori-verification",
   "version": "1.0.0",
-<<<<<<< HEAD
   "private": true,
-=======
-  "description": "EORI verification service",
-  "main": "server.js",
->>>>>>> 0968875bfefabab70c3c5c35967e2b14ba6ed971
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node api/validate-eori.js"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "autoprefixer": "^10.4.20",
-    "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "node-fetch": "^2.7.0",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.7"
-  },
-  "main": "server.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
-=======
-    "axios": "^1.6.0",
-    "compression": "^1.7.5",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-rate-limit": "^7.4.1",
-    "helmet": "^8.0.0",
-    "node-cache": "^5.1.2",
-    "winston": "^3.17.0",
-    "xml2js": "^0.6.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
+    "node-fetch": "2.6.7"
   }
->>>>>>> 0968875bfefabab70c3c5c35967e2b14ba6ed971
 }
